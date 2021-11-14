@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class Player : MonoBehaviour
 {
     public GameObject bullet;
@@ -16,15 +16,19 @@ public class Player : MonoBehaviour
     private float Increase;
     private Vector2 moveVelocity;
     private TrailRenderer tr;
-    public float num = 0.15f;
+    public float bulletScale = 0.15f;
+    public CinemachineVirtualCamera vcam;
+    private ExpSystem expSystem;
     private void Awake()
     {
+        vcam.m_Lens.OrthographicSize = 4f;
         mybody = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
+        expSystem = GameObject.Find("ExpBar").GetComponent<ExpSystem>();
     }
     private void Update()
     {
-        bullet.transform.localScale = new Vector3(num, num, num);
+        bullet.transform.localScale = new Vector3(bulletScale, bulletScale, bulletScale);
         Rotation();
         if (Input.GetMouseButtonDown(0))
             Shoot();
@@ -49,20 +53,26 @@ public class Player : MonoBehaviour
     }
     void Shoot()
     {
-        tr.startWidth -= 0.1f;
-        num -= 0.01f;
-        tr.time -= 0.03f;
-        transform.localScale -= new Vector3(Increase, Increase, Increase);
-        bullet = ObjectPool.Instance.GetObject(PoolObjectType.Bullet);
-        bullet.transform.position = shootingPoint.position;   
+        if (vcam.m_Lens.OrthographicSize > 4)
+        {
+            vcam.m_Lens.OrthographicSize -= 0.05f;
+            tr.startWidth -= 0.05f;
+            bulletScale -= 0.005f;
+            tr.time -= 0.015f;
+            transform.localScale -= new Vector3(Increase, Increase, Increase);
+            bullet = ObjectPool.Instance.GetObject(PoolObjectType.Bullet);
+            bullet.transform.position = shootingPoint.position;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == Tag)
         {
-            num += 0.01f;
-            tr.startWidth += 0.1f;
-            tr.time += 0.03f;
+            expSystem.updateExp += 1;
+            vcam.m_Lens.OrthographicSize += 0.05f;
+            bulletScale += 0.005f;
+            tr.startWidth += 0.05f;
+            tr.time += 0.015f;
             transform.localScale += new Vector3(Increase, Increase, Increase);
         }
     }
