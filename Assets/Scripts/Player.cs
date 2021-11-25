@@ -17,17 +17,17 @@ public class Player : MonoBehaviour
     private Vector2 moveVelocity;
     private TrailRenderer tr;
     public float bulletScale = 0.15f;
-    public CinemachineVirtualCamera vcam;
     private ExpSystem expSystem;
     private void Awake()
     {
-        vcam.m_Lens.OrthographicSize = 4f;
+        Camera.main.orthographicSize = 4f;
         mybody = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
         expSystem = GameObject.Find("ExpBar").GetComponent<ExpSystem>();
     }
     private void Update()
     {
+
         bullet.transform.localScale = new Vector3(bulletScale, bulletScale, bulletScale);
         Rotation();
         if (Input.GetMouseButtonDown(0))
@@ -53,9 +53,9 @@ public class Player : MonoBehaviour
     }
     void Shoot()
     {
-        if (vcam.m_Lens.OrthographicSize > 4)
+        if (Camera.main.orthographicSize > 4)
         {
-            vcam.m_Lens.OrthographicSize -= 0.05f;
+            Camera.main.orthographicSize -= 0.05f;
             tr.startWidth -= 0.05f;
             bulletScale -= 0.005f;
             tr.time -= 0.015f;
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == Tag)
         {
             expSystem.updateExp += 1;
-            vcam.m_Lens.OrthographicSize += 0.05f;
+            Camera.main.orthographicSize += 0.05f;
             bulletScale += 0.005f;
             tr.startWidth += 0.05f;
             tr.time += 0.015f;

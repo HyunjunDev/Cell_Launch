@@ -8,5 +8,7 @@ public enum PoolObjectType
     IcingFood,
     MelonFood,
     SakuraFood,
-    YellowFood
+    YellowFood,
+    MoveEnemy,
+    LazerEnemy
 }
