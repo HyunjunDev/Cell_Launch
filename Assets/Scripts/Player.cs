@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private TrailRenderer tr;
     public float bulletScale = 0.15f;
     private ExpSystem expSystem;
+    
     private void Awake()
     {
         Camera.main.orthographicSize = 4f;

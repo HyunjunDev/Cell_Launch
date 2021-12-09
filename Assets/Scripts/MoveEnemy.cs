@@ -5,28 +5,72 @@ using UnityEngine;
 public class MoveEnemy : MonoBehaviour
 {
     public float speed;
+    public float movingSpeed;
     public float stoppingDistance;
     public float retreatDistance;
 
-    //private Transform player;
+    public float timeBtwShots;
+    public float startTimeBtwShots;
 
-    //private void Start()
-    //{
-    //    player = GameObject.FindGameObjectWithTag("").transform;
-    //}
+    public GameObject projectile;
+
+    private bool moveOnOff = false;
+    private Vector2 bulletT;
+
     private void Update()
     {
-        if(Vector2.Distance(transform.position,Camera.main.transform.position)>stoppingDistance)
+        //플레이어 
+        if (moveOnOff == false)
         {
-            transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, speed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, Camera.main.transform.position) > stoppingDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, speed * Time.deltaTime);
+            }
+            else if (Vector2.Distance(transform.position, Camera.main.transform.position) < stoppingDistance && Vector2.Distance(transform.position, Camera.main.transform.position) > retreatDistance)
+            {
+                transform.position = this.transform.position;
+            }
+            else if (Vector2.Distance(transform.position, Camera.main.transform.position) < retreatDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, -speed * Time.deltaTime);
+            }
         }
-        else if (Vector2.Distance(transform.position, Camera.main.transform.position) < stoppingDistance && Vector2.Distance(transform.position, Camera.main.transform.position) > retreatDistance)
+        if (moveOnOff == true)
         {
-            transform.position = this.transform.position;
+            if (Vector2.Distance(transform.position, bulletT) > stoppingDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, bulletT, -movingSpeed * Time.deltaTime);
+            }
+            else if (Vector2.Distance(transform.position, bulletT) < stoppingDistance && Vector2.Distance(transform.position, bulletT) > retreatDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, bulletT, -movingSpeed * Time.deltaTime);
+            }
         }
-        else if(Vector2.Distance(transform.position, Camera.main.transform.position) <retreatDistance)
+        /*if (timeBtwShots <= 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, -speed * Time.deltaTime);
+            Instantiate(projectile, transform.position, Quaternion.identity);
+            timeBtwShots = Random.Range(1, startTimeBtwShots);
+        }
+        else
+        {
+            timeBtwShots -= Time.deltaTime;
+        }*/
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Bullet"))
+        {
+            Debug.Log("0");
+            moveOnOff = true;
+            bulletT = collision.transform.position;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Bullet"))
+        {
+            Debug.Log("1");
+            moveOnOff = false;
         }
     }
 }
