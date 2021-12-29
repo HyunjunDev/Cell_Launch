@@ -12,7 +12,9 @@ public class Projectile : MonoBehaviour
     private Vector2 distance;
     [SerializeField]
     PoolObjectType objectType;
-
+    public float time = 0f;
+    public float endTime = 5f;
+    
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
@@ -20,13 +22,15 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.x == target.x && transform.position.y == target.y)
-        {
-            ObjectPool.Instance.ReturnObject(PoolObjectType.Projectile, gameObject);
-        }
         transform.position = transform.position + (targetPositon.normalized *  speed * Time.deltaTime);
+        StartCoroutine("Timer");
     }
 
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(5f);
+        ObjectPool.Instance.ReturnObject(PoolObjectType.Projectile, gameObject);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("player"))
@@ -36,11 +40,6 @@ public class Projectile : MonoBehaviour
     }
     private void OnEnable()
     {
-        //targetPositon.position = transform.position - player.position;
-        //distance = 
-        ////distance = new Vector2(target.x - transform.position.x, target.y - transform.position.y);
-        ////float angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg;
-        //float angle = Mathf.Atan2(targetPositon.position.x, targetPositon.position.y) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+        
     }
 }

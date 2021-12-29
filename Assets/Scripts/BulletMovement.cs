@@ -31,4 +31,12 @@ public class BulletMovement : MonoBehaviour
     {
         bulletDirection = player.b_Dir.position;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == ("MoveEnemy"))
+        {
+            ObjectPool.Instance.ReturnObject(PoolObjectType.Bullet, gameObject);
+        }
+    }
 }

@@ -1597,7 +1597,8 @@ MonoBehaviour:
     - {fileID: 5461673215480059379, guid: a1b0fed001feea84cb83aba6f9ded7c9, type: 3}
     - {fileID: 7641069202450830775, guid: 86e6c55b299a18b439364c5b99c2cfba, type: 3}
     - {fileID: 4801225856164769671, guid: 80f6b2a54fe1fde48b61e90d82e97219, type: 3}
-    prefabCreateCounts: 2c01000001000000010000000100000001000000010000000100000001000000010000003200000037000000
+    - {fileID: 3060144033335332612, guid: fcad3caa7664e2e4e909079359f5dd0f, type: 3}
+    prefabCreateCounts: 2c010000010000000100000001000000010000000100000001000000010000000100000032000000370000000a000000
 --- !u!1 &1026862432
 GameObject:
   m_ObjectHideFlags: 0
@@ -3350,7 +3351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8141653745413660722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27, y: 0.285, z: 0}
+  m_LocalPosition: {x: -5, y: 3, z: 0}
   m_LocalScale: {x: 1.1091, y: 1.1091, z: 1.1091}
   m_Children:
   - {fileID: 8141653744673192713}

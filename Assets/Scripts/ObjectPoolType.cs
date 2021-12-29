@@ -10,5 +10,6 @@ public enum PoolObjectType
     SakuraFood,
     YellowFood,
     MoveEnemy,
-    Projectile
+    Projectile,
+    DeadPartice
 }

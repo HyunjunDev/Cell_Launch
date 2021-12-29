@@ -13,11 +13,13 @@ public class MoveEnemy : MonoBehaviour
     public float startTimeBtwShots;
     public GameObject projectile;
 
+    public GameObject deadEffect;
+
     private bool followOnOff = false;
     private bool moveOnOff = false;
     private MovingColider movingColider;
 
-    private int hp = 7;
+    private int hp = 1;
 
     private float waitTime;
     public float startWaitTime;
@@ -38,6 +40,7 @@ public class MoveEnemy : MonoBehaviour
         playerPos = GameObject.FindWithTag("player").transform;
         moveSpot = GameObject.Find("MoveSpot").transform.position;
         projectile = GameObject.FindGameObjectWithTag("Projectile");
+        deadEffect = GameObject.FindGameObjectWithTag("DeadEffect");
         waitTime = startWaitTime;
         moveSpot = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
         movingColider = FindObjectOfType<MovingColider>();
@@ -120,6 +123,8 @@ public class MoveEnemy : MonoBehaviour
             hp--;
             if(hp<=0)
             {
+                deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.DeadPartice);
+                deadEffect.transform.position = transform.position;
                 ObjectPool.Instance.ReturnObject(PoolObjectType.MoveEnemy, gameObject);
             }
             //Debug.Log(hp);
