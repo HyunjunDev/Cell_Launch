@@ -76,5 +76,9 @@ public class Player : MonoBehaviour
             tr.time += 0.015f;
             transform.localScale += new Vector3(Increase, Increase, Increase);
         }
+        if(collision.CompareTag("Projectile"))
+        {
+            Debug.Log("1");
+        }
     }
 }

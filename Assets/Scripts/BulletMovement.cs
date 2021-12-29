@@ -14,7 +14,9 @@ public class BulletMovement : MonoBehaviour
     private void Awake()
     {
         player = FindObjectOfType<Player>();
+
         bullet = this.gameObject;
+
         bulletDirection = player.b_Dir.position;
     }
     void Update()

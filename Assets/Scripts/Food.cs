@@ -42,7 +42,7 @@ public class Food : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == ("player"))
+        if (collision.gameObject.tag == ("player")|| collision.gameObject.tag == ("MoveEnemy"))
         {
             switch (objectType)
             {

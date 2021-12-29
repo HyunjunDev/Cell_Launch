@@ -8,6 +8,8 @@ TagManager:
   - player
   - Bullet
   - MoveColider
+  - MoveEnemy
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - Bullet
   - Player
-  - 
+  - Projectile
   - 
   - 
   - 

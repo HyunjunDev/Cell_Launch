@@ -11,66 +11,130 @@ public class MoveEnemy : MonoBehaviour
 
     public float timeBtwShots;
     public float startTimeBtwShots;
-
     public GameObject projectile;
 
+    private bool followOnOff = false;
     private bool moveOnOff = false;
-    private Vector2 bulletT;
+    private MovingColider movingColider;
 
+    private int hp = 7;
+
+    private float waitTime;
+    public float startWaitTime;
+    public Vector3 moveSpot;
+    public float minX;
+    public float maxX;
+    public float minY;
+    public float maxY;
+    public float minZ;
+    public float maxZ;
+
+    private void Start()
+    {
+        moveSpot = GameObject.Find("MoveSpot").transform.position;
+        projectile = GameObject.FindGameObjectWithTag("Projectile");
+        waitTime = startWaitTime;
+        moveSpot = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
+        movingColider = FindObjectOfType<MovingColider>();
+        timeBtwShots = startTimeBtwShots;
+    }
     private void Update()
     {
-        //플레이어 
-        if (moveOnOff == false)
+        if(followOnOff==true)
         {
-            if (Vector2.Distance(transform.position, Camera.main.transform.position) > stoppingDistance)
+            Shoot();
+
+            if (moveOnOff == false)
             {
-                transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, speed * Time.deltaTime);
+                if (Vector2.Distance(transform.position, Camera.main.transform.position) > stoppingDistance)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, speed * Time.deltaTime);
+                }
+                else if (Vector2.Distance(transform.position, Camera.main.transform.position) < stoppingDistance && Vector2.Distance(transform.position, Camera.main.transform.position) > retreatDistance)
+                {
+                    transform.position = this.transform.position;
+                }
+                else if (Vector2.Distance(transform.position, Camera.main.transform.position) < retreatDistance)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, -speed * Time.deltaTime);
+                }
             }
-            else if (Vector2.Distance(transform.position, Camera.main.transform.position) < stoppingDistance && Vector2.Distance(transform.position, Camera.main.transform.position) > retreatDistance)
+            if (moveOnOff == true)
             {
-                transform.position = this.transform.position;
-            }
-            else if (Vector2.Distance(transform.position, Camera.main.transform.position) < retreatDistance)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, Camera.main.transform.position, -speed * Time.deltaTime);
+                if (Vector2.Distance(transform.position, movingColider.bulletT) > stoppingDistance)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, movingColider.bulletT, -movingSpeed * Time.deltaTime);
+                }
+                else if (Vector2.Distance(transform.position, movingColider.bulletT) < stoppingDistance && Vector2.Distance(transform.position, movingColider.bulletT) > retreatDistance)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, movingColider.bulletT, -movingSpeed * Time.deltaTime);
+                }
             }
         }
-        if (moveOnOff == true)
+        if(followOnOff==false)
         {
-            if (Vector2.Distance(transform.position, bulletT) > stoppingDistance)
+            transform.position = Vector3.MoveTowards(transform.position, moveSpot, speed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, moveSpot) < 0.2f)
             {
-                transform.position = Vector2.MoveTowards(transform.position, bulletT, -movingSpeed * Time.deltaTime);
-            }
-            else if (Vector2.Distance(transform.position, bulletT) < stoppingDistance && Vector2.Distance(transform.position, bulletT) > retreatDistance)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, bulletT, -movingSpeed * Time.deltaTime);
+                if (waitTime <= 0)
+                {
+                    moveSpot = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
+                    waitTime = startWaitTime;
+                }
+                else
+                {
+                    waitTime -= Time.deltaTime;
+                }
             }
         }
-        /*if (timeBtwShots <= 0)
+    }
+    public void Shoot()
+    {
+        if (timeBtwShots <= 0)
         {
-            Instantiate(projectile, transform.position, Quaternion.identity);
+            projectile = ObjectPool.Instance.GetObject(PoolObjectType.Projectile);
+            projectile.transform.position = transform.position;
+            projectile.transform.rotation = Quaternion.identity;
             timeBtwShots = Random.Range(1, startTimeBtwShots);
         }
         else
         {
             timeBtwShots -= Time.deltaTime;
-        }*/
+        }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
         {
-            Debug.Log("0");
-            moveOnOff = true;
-            bulletT = collision.transform.position;
+            hp--;
+            if(hp<=0)
+            {
+                ObjectPool.Instance.ReturnObject(PoolObjectType.MoveEnemy, gameObject);
+            }
+            //Debug.Log(hp);
         }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Bullet"))
+        if (collision.CompareTag("Food"))
         {
-            Debug.Log("1");
-            moveOnOff = false;
+            hp++;
+            transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
         }
     }
+    public void OnMoving(MoveEnemy m)
+    {
+        moveOnOff = true;
+    }
+    public void OffMoving(MoveEnemy m)
+    {
+        moveOnOff = false;
+    }
+    public void OnFollow(MoveEnemy m)
+    {
+        followOnOff = true;
+    }    
+    public void OffFollow(MoveEnemy m)
+    {
+        followOnOff = false;
+    }
+    
 }
