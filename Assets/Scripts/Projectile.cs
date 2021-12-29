@@ -8,14 +8,13 @@ public class Projectile : MonoBehaviour
 
     private Transform player;
     private Vector2 target;
-    private Transform targetPositon;
+    public Vector3 targetPositon = Vector3.zero;
     private Vector2 distance;
     [SerializeField]
     PoolObjectType objectType;
 
     private void Awake()
     {
-        targetPositon = GetComponent<Transform>();
         player = GameObject.Find("Player").transform;
     }
 
@@ -25,7 +24,7 @@ public class Projectile : MonoBehaviour
         {
             ObjectPool.Instance.ReturnObject(PoolObjectType.Projectile, gameObject);
         }
-        transform.Translate(Vector2.up * Time.deltaTime);
+        transform.position = transform.position + (targetPositon.normalized *  speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

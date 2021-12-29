@@ -286,6 +286,7 @@ MonoBehaviour:
   maxY: 30
   minZ: -30
   maxZ: 30
+  playerPos: {fileID: 0}
 --- !u!58 &7641069202450830770
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -322,4 +323,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

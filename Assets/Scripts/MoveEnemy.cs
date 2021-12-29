@@ -29,8 +29,13 @@ public class MoveEnemy : MonoBehaviour
     public float minZ;
     public float maxZ;
 
+    private Vector2 distance;
+    public Transform playerPos;
+    private float angle;
+
     private void Start()
     {
+        playerPos = GameObject.FindWithTag("player").transform;
         moveSpot = GameObject.Find("MoveSpot").transform.position;
         projectile = GameObject.FindGameObjectWithTag("Projectile");
         waitTime = startWaitTime;
@@ -88,6 +93,8 @@ public class MoveEnemy : MonoBehaviour
                 }
             }
         }
+        distance = playerPos.transform.position - transform.position;
+        angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg;
     }
     public void Shoot()
     {
@@ -95,7 +102,10 @@ public class MoveEnemy : MonoBehaviour
         {
             projectile = ObjectPool.Instance.GetObject(PoolObjectType.Projectile);
             projectile.transform.position = transform.position;
-            projectile.transform.rotation = Quaternion.identity;
+            //Quaternion quaternion = Quaternion.AngleAxis(-angle - 90, Vector3.forward);
+            projectile.transform.rotation = Quaternion.Euler(new Vector3(0f,0f,angle));
+            projectile.GetComponent<Projectile>().targetPositon = distance;
+            //projectile.transform.Rotate(distance.x, distance.y, 0f);
             timeBtwShots = Random.Range(1, startTimeBtwShots);
         }
         else
