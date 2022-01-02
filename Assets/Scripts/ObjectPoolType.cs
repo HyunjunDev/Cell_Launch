@@ -11,5 +11,6 @@ public enum PoolObjectType
     YellowFood,
     MoveEnemy,
     Projectile,
-    DeadPartice
+    DeadParticle,
+    PlayerDeadParticle
 }

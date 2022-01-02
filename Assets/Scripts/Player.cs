@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
     private TrailRenderer tr;
     public float bulletScale = 0.15f;
     private ExpSystem expSystem;
-    
+    private float hp = 1;
+    public GameObject deadEffect;
     private void Awake()
     {
         Camera.main.orthographicSize = 4f;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
     {
         if (Camera.main.orthographicSize > 4)
         {
+            hp--;
             Camera.main.orthographicSize -= 0.05f;
             tr.startWidth -= 0.05f;
             bulletScale -= 0.005f;
@@ -69,6 +71,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == Tag)
         {
+            hp++;
             expSystem.updateExp += 1;
             Camera.main.orthographicSize += 0.05f;
             bulletScale += 0.005f;
@@ -78,6 +81,18 @@ public class Player : MonoBehaviour
         }
         if(collision.CompareTag("Projectile"))
         {
+            hp--;
+            Camera.main.orthographicSize -= 0.05f;
+            tr.startWidth -= 0.05f;
+            bulletScale -= 0.005f;
+            tr.time -= 0.015f;
+            transform.localScale -= new Vector3(Increase, Increase, Increase);
+            if (hp<=0)
+            {
+                deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.PlayerDeadParticle);
+                deadEffect.transform.position = transform.position;
+                Destroy(gameObject);
+            }
             Debug.Log("1");
         }
     }

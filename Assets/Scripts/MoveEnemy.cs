@@ -19,7 +19,7 @@ public class MoveEnemy : MonoBehaviour
     private bool moveOnOff = false;
     private MovingColider movingColider;
 
-    private int hp = 1;
+    private int hp = 7;
 
     private float waitTime;
     public float startWaitTime;
@@ -96,8 +96,16 @@ public class MoveEnemy : MonoBehaviour
                 }
             }
         }
-        distance = playerPos.transform.position - transform.position;
-        angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg;
+        if(playerPos==null)
+        {
+            return;
+        }
+        else 
+        {
+            distance = playerPos.transform.position - transform.position;
+            angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg;
+        }
+       
     }
     public void Shoot()
     {
@@ -121,9 +129,10 @@ public class MoveEnemy : MonoBehaviour
         if (collision.CompareTag("Bullet"))
         {
             hp--;
-            if(hp<=0)
+            transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
+            if (hp<=0)
             {
-                deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.DeadPartice);
+                deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.DeadParticle);
                 deadEffect.transform.position = transform.position;
                 ObjectPool.Instance.ReturnObject(PoolObjectType.MoveEnemy, gameObject);
             }

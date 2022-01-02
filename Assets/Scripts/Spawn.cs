@@ -13,8 +13,8 @@ public class Spawn : MonoBehaviour
     }
     void Generate()
     {
-        int x = Random.Range(-1000, 2500);
-        int y = Random.Range(-1000, 2500);
+        int x = Random.Range(-4500, 4500);
+        int y = Random.Range(-4500, 4500);
         Vector3 Target = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
         Target.z = 0;
         random = Random.Range(0, 8);

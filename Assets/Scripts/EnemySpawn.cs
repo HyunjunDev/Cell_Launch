@@ -12,13 +12,13 @@ public class EnemySpawn : MonoBehaviour
     {
         currTime += Time.deltaTime;
 
-        if (currTime > 20)
+        if (currTime >= 8)
         {
             //float newX = Random.Range(-137f, 137f), newY = Random.Range(-141f, 142f), newZ = Random.Range(-100f, 100f);
-            float newX = Random.Range(-30f, 30f), newY = Random.Range(-30f, 30f), newZ = Random.Range(-30f, 30f);
+            float newX = Random.Range(-127f, 160f), newY = Random.Range(-120f, 160f);
             moveEnemy = ObjectPool.Instance.GetObject(PoolObjectType.MoveEnemy);
 
-            moveEnemy.transform.position = new Vector3(newX, newY, newZ);
+            moveEnemy.transform.position = new Vector3(newX, newY, 0);
 
             currTime = 0;
         }

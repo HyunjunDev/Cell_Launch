@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadEffect : MonoBehaviour
+public class PlayerDeadEffect : MonoBehaviour
 {
     [SerializeField]
     PoolObjectType objectType;
@@ -15,9 +15,9 @@ public class DeadEffect : MonoBehaviour
     }
     void Update()
     {
-        if(deadParticle.gameObject.activeSelf==false)
+        if (deadParticle.gameObject.activeSelf == false)
         {
-            ObjectPool.Instance.ReturnObject(PoolObjectType.DeadParticle, gameObject);
+            ObjectPool.Instance.ReturnObject(PoolObjectType.PlayerDeadParticle, gameObject);
         }
     }
 }

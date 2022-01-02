@@ -278,14 +278,15 @@ MonoBehaviour:
   timeBtwShots: 1
   startTimeBtwShots: 1
   projectile: {fileID: 0}
+  deadEffect: {fileID: 0}
   startWaitTime: 3
   moveSpot: {x: 0, y: 0, z: 0}
-  minX: -30
-  maxX: 30
-  minY: -30
-  maxY: 30
-  minZ: -30
-  maxZ: 30
+  minX: -127
+  maxX: 150
+  minY: -120
+  maxY: 150
+  minZ: 0
+  maxZ: 0
   playerPos: {fileID: 0}
 --- !u!58 &7641069202450830770
 CircleCollider2D:
@@ -297,7 +298,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

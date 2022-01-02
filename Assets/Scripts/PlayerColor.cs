@@ -7,6 +7,7 @@ public class PlayerColor : MonoBehaviour
     public List<Material> Mats = new List<Material>();
     public Material material;
     public Renderer bulletColor;
+    public Renderer effectColor;
     private Player player;
     public int random = 0;
     public void Awake()
@@ -15,6 +16,7 @@ public class PlayerColor : MonoBehaviour
         player = GetComponent<Player>();
         tr.material = new Material(material);
         bulletColor = player.bullet.GetComponent<Renderer>();
+        effectColor = player.deadEffect.GetComponent<Renderer>();
         UnityEngine.Color32 blue = new UnityEngine.Color32(142, 139, 240, 255);
         UnityEngine.Color32 green = new UnityEngine.Color32(124, 222, 164, 255);
         UnityEngine.Color32 yellow = new UnityEngine.Color32(255, 233, 125, 255);
@@ -45,5 +47,6 @@ public class PlayerColor : MonoBehaviour
         tr.colorGradient = gradient;
         GetComponent<Renderer>().material = Mats[random];
         bulletColor.material = Mats[random];
+        effectColor.material = Mats[random];
     }
 }
