@@ -20,7 +20,7 @@ public class EnemySpawn : MonoBehaviour
         {
             currTime += Time.deltaTime;
 
-            if (currTime >= 8)
+            if (currTime >= 9)
             {
                 //float newX = Random.Range(-137f, 137f), newY = Random.Range(-141f, 142f), newZ = Random.Range(-100f, 100f);
                 float newX = Random.Range(-50f, 50f), newY = Random.Range(-50f, 50f);
