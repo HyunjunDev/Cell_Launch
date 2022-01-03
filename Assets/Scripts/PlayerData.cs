@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static PlayerData Instance
     {
-        
+        get
+        {
+            if(instance==null)
+            {
+                instance = FindObjectOfType<PlayerData>();
+                if(instance==null)
+                {
+                    var instanceContainer = new GameObject ( "PlayerData" );
+                    instance = instanceContainer.AddComponent<PlayerData>();
+                }
+            }
+            return instance;
+        }
     }
+    private static PlayerData instance;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //public float dmg = 1;
+
+    //public GameObject playerBolt;
+
+    public List<int> playerSkill = new List<int>();
 }

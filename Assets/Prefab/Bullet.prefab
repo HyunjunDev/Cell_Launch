@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2170740823130785731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.13, y: 5.58, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.16499999, y: 0.16499999, z: 0.16499999}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   objectType: 0
   speed: 10
   bullet: {fileID: 0}
+  exp: {fileID: 0}
 --- !u!50 &2170740823130785733
 Rigidbody2D:
   serializedVersion: 4
@@ -106,7 +107,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d02fd8940c5aab49b4c4c65bd783d89, type: 2}
+  - {fileID: 2100000, guid: 9f034ee1da9f11c4ba36d745ab098fb4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
     public float hp = 1;
     public GameObject deadEffect;
     public GameObject deadPanel;
+    [SerializeField]
+    private ExpSystem exp;
+    [SerializeField]
+    private SpriteRenderer gun;
     private void Awake()
     {
         deadPanel.SetActive(false);
@@ -31,11 +35,28 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-
         bullet.transform.localScale = new Vector3(bulletScale, bulletScale, bulletScale);
         Rotation();
         if (Input.GetMouseButtonDown(0))
+        {
             Shoot();
+            if(exp.playerLevel>=2)
+            {
+                Invoke("MultiShoot", 0.2f);
+            }
+        }
+        if(exp.playerLevel==3&&speed==3)
+        {
+            speed += 2;
+        }
+        if (transform.rotation.z < 0)
+        {
+            gun.flipY = true;
+        }
+        else
+        {
+            gun.flipY = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -65,6 +86,14 @@ public class Player : MonoBehaviour
             bulletScale -= 0.005f;
             tr.time -= 0.015f;
             transform.localScale -= new Vector3(Increase, Increase, Increase);
+            bullet = ObjectPool.Instance.GetObject(PoolObjectType.Bullet);
+            bullet.transform.position = shootingPoint.position;
+        }
+    }
+    void MultiShoot()
+    {
+        if (Camera.main.orthographicSize > 4)
+        {
             bullet = ObjectPool.Instance.GetObject(PoolObjectType.Bullet);
             bullet.transform.position = shootingPoint.position;
         }

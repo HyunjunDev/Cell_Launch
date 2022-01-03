@@ -6,14 +6,17 @@ public class BulletMovement : MonoBehaviour
 {
     [SerializeField]
     PoolObjectType objectType;
-    [SerializeField]
-    private float speed = 30;
+
+    public float speed = 30;
     private Player player;
     Vector2 bulletDirection;
     public GameObject bullet;
+    public ExpSystem exp;
     private void Awake()
     {
         player = FindObjectOfType<Player>();
+
+        exp = FindObjectOfType<ExpSystem>();
 
         bullet = this.gameObject;
 
@@ -21,6 +24,10 @@ public class BulletMovement : MonoBehaviour
     }
     void Update()
     {
+        if (exp.playerLevel >= 3)
+        {
+            speed = 40;
+        }
         bullet.transform.position = Vector2.MoveTowards(bullet.transform.position, bulletDirection, speed * Time.deltaTime);
         if ((Vector2)bullet.transform.position == bulletDirection)
         {
