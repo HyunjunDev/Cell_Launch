@@ -6,21 +6,30 @@ public class EnemySpawn : MonoBehaviour
 {
     public GameObject moveEnemy;
 
+    public GameObject player;
+
     public float currTime;
 
     void Update()
     {
-        currTime += Time.deltaTime;
-
-        if (currTime >= 8)
+        if(player==null)
         {
-            //float newX = Random.Range(-137f, 137f), newY = Random.Range(-141f, 142f), newZ = Random.Range(-100f, 100f);
-            float newX = Random.Range(-127f, 160f), newY = Random.Range(-120f, 160f);
-            moveEnemy = ObjectPool.Instance.GetObject(PoolObjectType.MoveEnemy);
+            return;
+        }
+        else
+        {
+            currTime += Time.deltaTime;
 
-            moveEnemy.transform.position = new Vector3(newX, newY, 0);
+            if (currTime >= 8)
+            {
+                //float newX = Random.Range(-137f, 137f), newY = Random.Range(-141f, 142f), newZ = Random.Range(-100f, 100f);
+                float newX = Random.Range(-50f, 50f), newY = Random.Range(-50f, 50f);
+                moveEnemy = ObjectPool.Instance.GetObject(PoolObjectType.MoveEnemy);
 
-            currTime = 0;
+                moveEnemy.transform.position = new Vector3(newX, newY, 0);
+
+                currTime = 0;
+            }
         }
     }
 }

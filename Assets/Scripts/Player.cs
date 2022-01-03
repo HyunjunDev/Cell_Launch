@@ -18,10 +18,12 @@ public class Player : MonoBehaviour
     private TrailRenderer tr;
     public float bulletScale = 0.15f;
     private ExpSystem expSystem;
-    private float hp = 1;
+    public float hp = 1;
     public GameObject deadEffect;
+    public GameObject deadPanel;
     private void Awake()
     {
+        deadPanel.SetActive(false);
         Camera.main.orthographicSize = 4f;
         mybody = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
@@ -92,6 +94,7 @@ public class Player : MonoBehaviour
                 deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.PlayerDeadParticle);
                 deadEffect.transform.position = transform.position;
                 Destroy(gameObject);
+                deadPanel.SetActive(true);
             }
             Debug.Log("1");
         }

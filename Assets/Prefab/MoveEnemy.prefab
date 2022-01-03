@@ -281,10 +281,10 @@ MonoBehaviour:
   deadEffect: {fileID: 0}
   startWaitTime: 3
   moveSpot: {x: 0, y: 0, z: 0}
-  minX: -127
-  maxX: 150
-  minY: -120
-  maxY: 150
+  minX: -53
+  maxX: 53
+  minY: -53
+  maxY: 53
   minZ: 0
   maxZ: 0
   playerPos: {fileID: 0}
