@@ -24,13 +24,22 @@ public class BulletMovement : MonoBehaviour
     }
     void Update()
     {
-        if (exp.playerLevel >= 3)
+        if (exp.playerLevel >= 6)
         {
             speed = 40;
+        }
+        if (exp.playerLevel >= 3 && exp.playerLevel<6)
+        {
+            speed = 27;
         }
         bullet.transform.position = Vector2.MoveTowards(bullet.transform.position, bulletDirection, speed * Time.deltaTime);
         if ((Vector2)bullet.transform.position == bulletDirection)
         {
+            if (exp.playerLevel >= 4)
+            {
+                player.deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.PlayerDeadParticle);
+                player.deadEffect.transform.position = transform.position;
+            }
             ObjectPool.Instance.ReturnObject(PoolObjectType.Bullet, gameObject);
         }
     }
@@ -43,6 +52,11 @@ public class BulletMovement : MonoBehaviour
     {
         if(collision.gameObject.tag == ("MoveEnemy"))
         {
+            if(exp.playerLevel>=4)
+            {
+                player.deadEffect= ObjectPool.Instance.GetObject(PoolObjectType.PlayerDeadParticle);
+                player.deadEffect.transform.position = transform.position;
+            }
             ObjectPool.Instance.ReturnObject(PoolObjectType.Bullet, gameObject);
         }
     }

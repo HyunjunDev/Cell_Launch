@@ -279,6 +279,7 @@ MonoBehaviour:
   startTimeBtwShots: 1
   projectile: {fileID: 0}
   deadEffect: {fileID: 0}
+  hp: 7
   startWaitTime: 3
   moveSpot: {x: 0, y: 0, z: 0}
   minX: -53
@@ -288,6 +289,7 @@ MonoBehaviour:
   minZ: 0
   maxZ: 0
   playerPos: {fileID: 0}
+  exp: {fileID: 0}
 --- !u!58 &7641069202450830770
 CircleCollider2D:
   m_ObjectHideFlags: 0

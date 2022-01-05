@@ -19,7 +19,7 @@ public class MoveEnemy : MonoBehaviour
     private bool moveOnOff = false;
     private MovingColider movingColider;
 
-    private int hp = 7;
+    public int hp;
 
     private float waitTime;
     public float startWaitTime;
@@ -35,9 +35,14 @@ public class MoveEnemy : MonoBehaviour
     public Transform playerPos;
     private float angle;
 
+    public ExpSystem exp;
+
+    private bool isDamage = true;
     private void Start()
     {
+        hp = Random.Range(7, 20);
         playerPos = GameObject.FindWithTag("player").transform;
+        exp = FindObjectOfType<ExpSystem>();
         moveSpot = GameObject.Find("MoveSpot").transform.position;
         projectile = GameObject.FindGameObjectWithTag("Projectile");
         deadEffect = GameObject.FindGameObjectWithTag("DeadEffect");
@@ -132,6 +137,7 @@ public class MoveEnemy : MonoBehaviour
             transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
             if (hp<=0)
             {
+                exp.updateExp += Random.Range(5,20);
                 deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.DeadParticle);
                 deadEffect.transform.position = transform.position;
                 ObjectPool.Instance.ReturnObject(PoolObjectType.MoveEnemy, gameObject);
@@ -144,6 +150,30 @@ public class MoveEnemy : MonoBehaviour
             transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
         }
     }
+    public void OnParticleCollision(GameObject other)
+    {
+        if(isDamage == true)
+        {
+            isDamage = false;
+            hp--;
+            Debug.Log(hp);
+            transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
+            if (hp <= 0)
+            {
+                exp.updateExp += Random.Range(5, 20);
+                deadEffect = ObjectPool.Instance.GetObject(PoolObjectType.DeadParticle);
+                deadEffect.transform.position = transform.position;
+                ObjectPool.Instance.ReturnObject(PoolObjectType.MoveEnemy, gameObject);
+            }
+            Invoke("OnTrue", 1f);
+        }
+    }
+
+    private void OnTrue()
+    {
+        isDamage = true;
+    }
+
     public void OnMoving(MoveEnemy m)
     {
         moveOnOff = true;
